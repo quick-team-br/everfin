@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     // id("com.android.application")
+
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
 }
@@ -32,10 +33,14 @@ kotlin {
     }
     
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            // Import the Firebase BoM
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            // TODO: Add the dependencies for Firebase products you want to use
+            // When using the BoM, don't specify versions in Firebase dependencies
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,6 +49,11 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // firebase
+            implementation(libs.firebase.firestore)
+            implementation(libs.firebase.common)
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
@@ -82,13 +92,6 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
-        // Import the Firebase BoM
-        implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-        // TODO: Add the dependencies for Firebase products you want to use
-        // When using the BoM, don't specify versions in Firebase dependencies
-        implementation("com.google.firebase:firebase-analytics")
-
-
     }
 }
 
