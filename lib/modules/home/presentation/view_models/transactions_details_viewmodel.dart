@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:everfin/core/extensions/list_extensions.dart';
-import 'package:everfin/modules/home/models/transaction_category_preference.dart';
+import 'package:everfin/modules/home/models/transaction_category_limit.dart';
 import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/models/transactions_balance.dart';
 import 'package:everfin/modules/home/models/transactions_details_state.dart';
@@ -25,7 +25,7 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
     totalExpense: 0,
     total: 0,
   );
-  List<ExpenseCategoryPreference> expenseCategoryPreference = [];
+  List<ExpenseCategoryLimit> expenseCategoryLimits = [];
 
   TransactionsDetails(this.ref) : super(TransactionsDetailsState()) {
     final selectedMonth = ref.read(monthSelectorProvider) + 1;
@@ -49,7 +49,8 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
   }
 
   Future<void> loadPreferences() async {
-    await TransactionService().fetchExpenseCategoryPreferences();
+    expenseCategoryLimits =
+        await TransactionService().fetchExpenseCategoryLimits();
   }
 
   void setFilterType(TransactionType? type) {
@@ -66,37 +67,42 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
   }
 
   List<SummaryRowData> get chartCategories {
-    switch (state.filterType) {
-      case null:
-        return [
-          SummaryRowData(
-            name: "Entradas",
-            color: Colors.lightBlue,
-            value: balance.totalIncome,
-          ),
-          SummaryRowData(
-            name: "Saídas",
-            color: Colors.redAccent,
-            value: balance.totalExpense,
-          ),
-        ];
-      case TransactionType.income:
-        final incomeTransactions = state.transactions
-            .where((t) => t.type == TransactionType.income)
-            .groupBy((t) => t.categoryId);
-
-        return incomeTransactions.entries.map((entry) {
-          final categoryTotal = entry.value.fold(0, (sum, t) => sum + t.amount);
-          final categoryName = entry.value.first.categoryName;
-
-          return SummaryRowData(
-            name: categoryName,
-            color: Colors.lightBlue,
-            value: categoryTotal,
-          );
-        }).toList();
-      default:
-        return [];
+    if (state.filterType == null) {
+      return [
+        SummaryRowData(
+          name: "Entradas",
+          color: Colors.lightBlue,
+          value: balance.totalIncome,
+        ),
+        SummaryRowData(
+          name: "Saídas",
+          color: Colors.redAccent,
+          value: balance.totalExpense,
+        ),
+      ];
     }
+    return _groupTransactionsByType(state.filterType!);
+  }
+
+  List<SummaryRowData> _groupTransactionsByType(TransactionType type) {
+    final incomeTransactions = state.transactions
+        .where((t) => t.type == type)
+        .groupBy((t) => t.categoryId);
+
+    return incomeTransactions.entries.map((entry) {
+      final categoryTotal = entry.value.fold(0, (sum, t) => sum + t.amount);
+      final categoryName = entry.value.first.categoryName;
+      final categoryId = entry.value.first.categoryId;
+
+      return SummaryRowData(
+        name: categoryName,
+        color: Colors.lightBlue,
+        value: categoryTotal,
+        limit:
+            expenseCategoryLimits
+                .firstWhere((catLimit) => catLimit.id == categoryId)
+                .limit,
+      );
+    }).toList();
   }
 }

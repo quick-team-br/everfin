@@ -9,6 +9,9 @@ class CategoriesSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final someCategoryHasLimit = items.any(
+      (cat) => cat.limit != null && cat.limit != 0,
+    );
     return Container(
       width: double.maxFinite,
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -23,7 +26,27 @@ class CategoriesSummary extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Categoria"), Text("Valor")],
+            children: [
+              Text("Categoria"),
+              if (someCategoryHasLimit)
+                Text.rich(
+                  TextSpan(
+                    text: "Valor / ",
+                    children: [
+                      TextSpan(
+                        text: "Limite",
+                        style: TextStyle(
+                          color: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.color?.withAlpha(200),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              else
+                Text("Valor"),
+            ],
           ),
           const SizedBox(height: 16),
           ...items.map((item) => _subtitleItem(item, context)),
@@ -52,12 +75,33 @@ class CategoriesSummary extends StatelessWidget {
               Text(item.name),
             ],
           ),
-          Text(
-            item.value.toBRL(),
-            style: Theme.of(
-              context,
-            ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w400),
-          ),
+          if (item.limit != null)
+            Text.rich(
+              TextSpan(
+                text: item.value.toBRL(),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w400),
+                children: [
+                  TextSpan(text: ' / '),
+                  TextSpan(
+                    text: item.limit!.toBRL(),
+                    style: TextStyle(
+                      color: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.color?.withAlpha(200),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            Text(
+              item.value.toBRL(),
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w400),
+            ),
         ],
       ),
     );

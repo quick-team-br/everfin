@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:everfin/core/theme/app_gradients.dart';
+import 'package:everfin/modules/home/models/transaction_category_limit.dart';
 import 'package:everfin/shared/widgets/gradient_button.dart';
 import 'package:everfin/shared/widgets/modey_text_field.dart';
 
 class EditLimitsBottomSheet extends ConsumerWidget {
-  const EditLimitsBottomSheet({super.key});
+  final List<ExpenseCategoryLimit> categoryLimits;
+
+  const EditLimitsBottomSheet({super.key, required this.categoryLimits});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +51,9 @@ class EditLimitsBottomSheet extends ConsumerWidget {
             const SizedBox(height: 6),
             Text("Altere os limites que deseja por categoria"),
             const SizedBox(height: 24),
-            MoneyTextField(label: "Valor", onChanged: (_) {}),
+            ...categoryLimits.map(
+              (limit) => MoneyTextField(label: limit.name, onChanged: (_) {}),
+            ),
             const SizedBox(height: 20),
 
             Padding(

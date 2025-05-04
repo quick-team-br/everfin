@@ -180,7 +180,14 @@ class TransactionDetailsView extends ConsumerWidget {
                             context: context,
                             isScrollControlled: true,
                             builder: (context) {
-                              return const EditLimitsBottomSheet();
+                              return EditLimitsBottomSheet(
+                                categoryLimits:
+                                    ref
+                                        .read(
+                                          transactionsDetailsProvider.notifier,
+                                        )
+                                        .expenseCategoryLimits,
+                              );
                             },
                           );
                         },

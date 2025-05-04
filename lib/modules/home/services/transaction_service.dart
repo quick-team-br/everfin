@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:everfin/modules/home/models/transaction_category.dart';
-import 'package:everfin/modules/home/models/transaction_category_preference.dart';
+import 'package:everfin/modules/home/models/transaction_category_limit.dart';
 import 'package:everfin/modules/home/models/transactions_balance.dart';
 import 'package:everfin/services/http/auth_interceptor.dart';
 
@@ -29,8 +29,6 @@ class TransactionService {
           "offset": 0,
         }),
       );
-
-      print(jsonDecode(response.body));
 
       return List<Transaction>.from(
         (jsonDecode(response.body)["transactions"] ?? []).map(
@@ -102,8 +100,7 @@ class TransactionService {
     return [];
   }
 
-  Future<List<ExpenseCategoryPreference>>
-  fetchExpenseCategoryPreferences() async {
+  Future<List<ExpenseCategoryLimit>> fetchExpenseCategoryLimits() async {
     try {
       final response = await authenticatedGet(
         Uri.parse(
@@ -111,11 +108,9 @@ class TransactionService {
         ),
       );
 
-      print("result ${jsonDecode(response.body)}");
-
-      return List<ExpenseCategoryPreference>.from(
+      return List<ExpenseCategoryLimit>.from(
         jsonDecode(response.body)["preferences"].map(
-          (preference) => ExpenseCategoryPreference.fromJson(preference),
+          (preference) => ExpenseCategoryLimit.fromJson(preference),
         ),
       );
     } catch (e) {

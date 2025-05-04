@@ -88,7 +88,10 @@ class _SummaryCard extends StatelessWidget {
               children: [
                 Text(title, style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: 2),
-                Text(amount.toBRL()),
+                Text(
+                  amount.toBRL(),
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           ],
