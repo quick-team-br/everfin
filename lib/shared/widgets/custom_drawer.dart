@@ -33,15 +33,6 @@ class CustomDrawer extends StatelessWidget {
                       color: Theme.of(context).textTheme.titleSmall?.color,
                     ),
                   ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      'assets/svgs/sun_icon.svg',
-                      width: 28,
-                      semanticsLabel: 'Icone de sol',
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 20),
