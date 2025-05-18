@@ -21,7 +21,6 @@ dependencies:
   jwt_decoder: ^2.0.1
   dropdown_button2: ^2.3.9
   dotted_border: ^3.0.1
-  animated_theme_switcher: ^2.0.10
 
 dev_dependencies:
   flutter_test:
