@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
+import 'package:everfin/core/theme/app_colors.dart';
 import 'package:everfin/modules/auth/controller/auth_controller.dart';
 import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/presentation/view_models/add_transaction_sheet_viewmodel.dart';
@@ -13,16 +15,21 @@ import 'package:everfin/modules/home/presentation/widgets/balance_card.dart';
 import 'package:everfin/modules/home/presentation/widgets/month_selector.dart';
 import 'package:everfin/modules/home/presentation/widgets/recent_transactions.dart';
 import 'package:everfin/modules/home/presentation/widgets/summary_cards.dart';
+import 'package:everfin/shared/widgets/custom_drawer.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final homeState = ref.watch(homeProvider);
 
     final user = ref.watch(authControllerProvider).user;
+
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +37,16 @@ class HomeView extends ConsumerWidget {
             const SizedBox(height: 8),
             BalanceCard(
               balance: ref.read(homeProvider.notifier).balance.total,
-              headerActionLeft: const CircleAvatar(radius: 20),
+              headerActionLeft: IconButton.outlined(
+                icon: SvgPicture.asset(
+                  'assets/svgs/hamburger_menu_icon.svg',
+                  width: 24,
+                  semanticsLabel: 'Icone de menu',
+                ),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
+              ),
               headerTitle: Text.rich(
                 TextSpan(
                   text: 'Olá, ',
@@ -47,9 +63,12 @@ class HomeView extends ConsumerWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              headerActionRight: IconButton.outlined(
-                icon: Icon(Icons.arrow_back_outlined),
-                onPressed: ref.watch(authControllerProvider.notifier).logout,
+              headerActionRight: CircleAvatar(
+                radius: 20,
+                child: Text(
+                  user!.name[0].toUpperCase(),
+                  style: TextStyle(color: AppColors.lightText),
+                ),
               ),
             ),
             const SizedBox(height: 28),

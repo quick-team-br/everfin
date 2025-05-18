@@ -17,6 +17,24 @@ class Transaction {
     required this.description,
   });
 
+  Transaction copyWith({
+    String? id,
+    String? description,
+    String? categoryId,
+    String? categoryName,
+    TransactionType? type,
+    int? amount,
+  }) {
+    return Transaction(
+      id: id ?? this.id,
+      description: description ?? this.description,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      type: type ?? this.type,
+      amount: amount ?? this.amount,
+    );
+  }
+
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],

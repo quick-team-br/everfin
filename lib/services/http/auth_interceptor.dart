@@ -35,3 +35,35 @@ Future<http.Response> authenticatedPost(
   }
   throw Exception('Token de autenticação não encontrado.');
 }
+
+Future<http.Response> authenticatedPut(
+  Uri url, {
+  Map<String, String>? headers,
+  Object? body,
+  Encoding? encoding,
+}) async {
+  final authToken = await AuthService().getToken();
+  if (authToken != null) {
+    final newHeaders = <String, String>{
+      ...headers ?? {},
+      'Authorization': 'Bearer $authToken',
+    };
+    return http.put(url, headers: newHeaders, body: body, encoding: encoding);
+  }
+  throw Exception('Token de autenticação não encontrado.');
+}
+
+Future<http.Response> authenticatedDelete(
+  Uri url, {
+  Map<String, String>? headers,
+}) async {
+  final authToken = await AuthService().getToken();
+  if (authToken != null) {
+    final newHeaders = <String, String>{
+      'Authorization': 'Bearer $authToken',
+      ...headers ?? {},
+    };
+    return http.delete(url, headers: newHeaders);
+  }
+  throw Exception('Token de autenticação não encontrado.');
+}

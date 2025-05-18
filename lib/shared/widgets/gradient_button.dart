@@ -47,6 +47,8 @@ class _GradientButtonState extends State<GradientButton> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDisabled = widget.onPressed == null;
+
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
@@ -59,26 +61,30 @@ class _GradientButtonState extends State<GradientButton> {
           onTap: widget.onPressed,
           borderRadius: BorderRadius.circular(widget.borderRadius),
           child: Ink(
-            decoration: BoxDecoration(
-              gradient: widget.gradient,
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-            ),
-            child: Container(
-              padding: widget.padding,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.text,
-                    style: ButtonStyles.elevated.textStyle?.resolve({}),
-                  ),
-                  if (widget.icon != null) ...[
-                    const SizedBox(width: 8),
-                    widget.icon!,
+            child: AnimatedOpacity(
+              opacity: isDisabled ? 0.5 : 1.0,
+              duration: const Duration(milliseconds: 300),
+              child: Container(
+                padding: widget.padding,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: widget.gradient,
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.text,
+                      style: ButtonStyles.elevated.textStyle?.resolve({}),
+                    ),
+                    if (widget.icon != null) ...[
+                      const SizedBox(width: 8),
+                      widget.icon!,
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),

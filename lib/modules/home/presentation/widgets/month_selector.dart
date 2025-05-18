@@ -9,8 +9,15 @@ import '../view_models/month_selector_viewmodel.dart';
 
 class MonthSelector extends ConsumerStatefulWidget {
   final void Function(int)? onChange;
+  final Color? primaryColor;
+  final Gradient? gradient;
 
-  const MonthSelector({super.key, this.onChange});
+  const MonthSelector({
+    super.key,
+    this.onChange,
+    this.primaryColor,
+    this.gradient,
+  });
 
   @override
   _MonthSelectorState createState() => _MonthSelectorState();
@@ -52,6 +59,8 @@ class _MonthSelectorState extends ConsumerState<MonthSelector> {
   Widget build(BuildContext context) {
     final selectedIndex = ref.watch(monthSelectorProvider);
     final viewModel = ref.read(monthSelectorProvider.notifier);
+    final primaryColor = widget.primaryColor ?? Theme.of(context).primaryColor;
+    final buttonGradient = widget.gradient ?? AppGradients.primary;
 
     return Container(
       height: 42,
@@ -62,10 +71,7 @@ class _MonthSelectorState extends ConsumerState<MonthSelector> {
             icon: SvgPicture.asset(
               'assets/svgs/arrow_with_shadow_icon.svg',
               width: 24,
-              colorFilter: ColorFilter.mode(
-                Theme.of(context).primaryColor,
-                BlendMode.srcIn,
-              ),
+              colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
               semanticsLabel: "Mês anterior",
             ),
             onPressed: () => _goToIndex(selectedIndex - 1),
@@ -108,7 +114,7 @@ class _MonthSelectorState extends ConsumerState<MonthSelector> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        gradient: AppGradients.primary,
+                        gradient: buttonGradient,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Text(
@@ -130,10 +136,7 @@ class _MonthSelectorState extends ConsumerState<MonthSelector> {
               child: SvgPicture.asset(
                 'assets/svgs/arrow_with_shadow_icon.svg',
                 width: 24,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).primaryColor,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
                 semanticsLabel: "Próximo mês",
               ),
             ),

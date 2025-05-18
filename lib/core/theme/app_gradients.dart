@@ -8,6 +8,11 @@ class AppGradients {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
   );
+  static const red = LinearGradient(
+    colors: [Color(0xFFF35C5C), Color(0xFFE53838)],
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+  );
   static const primaryToTransparentTop = LinearGradient(
     colors: [AppColors.primary, Colors.transparent],
     begin: Alignment.bottomCenter,

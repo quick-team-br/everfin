@@ -19,7 +19,7 @@ class TransactionService {
     try {
       final response = await authenticatedPost(
         Uri.parse(
-          'https://api.quickteam.com.br/api/v1/users/7743c387-c950-4192-829e-322df9f24810/transactions',
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/transactions',
         ),
         body: jsonEncode({
           "start_date": startDate,
@@ -50,7 +50,7 @@ class TransactionService {
     try {
       final response = await authenticatedPost(
         Uri.parse(
-          'https://api.quickteam.com.br/api/v1/users/7743c387-c950-4192-829e-322df9f24810/transactions/${type.name}',
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/transactions/${type.name}',
         ),
         body: jsonEncode({
           "description": description,
@@ -66,11 +66,49 @@ class TransactionService {
     return null;
   }
 
+  Future<String?> editTransaction(Transaction t) async {
+    try {
+      final response = await authenticatedPut(
+        Uri.parse(
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/transactions/${t.id}',
+        ),
+        body: jsonEncode({
+          "type": t.type.name,
+          "amount": t.amount,
+          "description": t.description,
+          "category_id": t.categoryId,
+        }),
+      );
+
+      return jsonDecode(response.body)["id"];
+    } catch (e) {
+      print("Error editing transaction: $e");
+    }
+    return null;
+  }
+
+  Future<String?> deleteTransaction(String id) async {
+    try {
+      final response = await authenticatedDelete(
+        Uri.parse(
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/transactions/$id',
+        ),
+      );
+
+      print(jsonDecode(response.body));
+
+      return jsonDecode(response.body)["id"];
+    } catch (e) {
+      print("Error deleting transaction: $e");
+    }
+    return null;
+  }
+
   Future<TransactionsBalance> getBalance(int month) async {
     try {
       final response = await authenticatedGet(
         Uri.parse(
-          'https://api.quickteam.com.br/api/v1/users/7743c387-c950-4192-829e-322df9f24810/month-balance?month=$month',
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/month-balance?month=$month',
         ),
       );
 
@@ -100,11 +138,13 @@ class TransactionService {
     return [];
   }
 
-  Future<List<ExpenseCategoryLimit>> fetchExpenseCategoryLimits() async {
+  Future<List<ExpenseCategoryLimit>> fetchExpenseCategoryLimitsByMonth(
+    int month,
+  ) async {
     try {
       final response = await authenticatedGet(
         Uri.parse(
-          'https://api.quickteam.com.br/api/v1/users/7743c387-c950-4192-829e-322df9f24810/category-preferences',
+          'https://api.quickteam.com.br/api/v1/users/b6a8a637-1c6d-4176-b60c-e6fd5c951384/category-preferences/by-month?year=2025&month=$month',
         ),
       );
 

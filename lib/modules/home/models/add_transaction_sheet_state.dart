@@ -6,6 +6,7 @@ class AddTransactionSheetState {
   final String? category;
   final bool isLoading;
   final List<TransactionCategory> availableCategories;
+  final bool isValid;
 
   static const _unset = Object();
 
@@ -14,6 +15,7 @@ class AddTransactionSheetState {
     this.category,
     this.isLoading = false,
     this.availableCategories = const [],
+    this.isValid = false,
   });
 
   AddTransactionSheetState copyWith({
@@ -21,12 +23,14 @@ class AddTransactionSheetState {
     Object? category = _unset,
     bool? isLoading,
     List<TransactionCategory>? availableCategories,
+    bool? isValid,
   }) {
     return AddTransactionSheetState(
       selectedType: selectedType ?? this.selectedType,
       category: category == _unset ? this.category : category as String?,
       isLoading: isLoading ?? this.isLoading,
       availableCategories: availableCategories ?? this.availableCategories,
+      isValid: isValid ?? this.isValid,
     );
   }
 }

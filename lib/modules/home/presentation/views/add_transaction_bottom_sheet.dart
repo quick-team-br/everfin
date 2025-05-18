@@ -20,8 +20,6 @@ class AddTransactionBottomSheet extends ConsumerWidget {
     final viewModel = ref.read(addTransactionSheetViewModelProvider.notifier);
     final state = ref.watch(addTransactionSheetViewModelProvider);
 
-    print(state.category);
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -100,7 +98,10 @@ class AddTransactionBottomSheet extends ConsumerWidget {
                   Expanded(
                     child: GradientButton(
                       text: "Confirmar",
-                      gradient: AppGradients.primary,
+                      gradient:
+                          state.selectedType == TransactionType.income
+                              ? AppGradients.primary
+                              : AppGradients.red,
                       icon:
                           state.isLoading
                               ? SizedBox(
@@ -113,7 +114,7 @@ class AddTransactionBottomSheet extends ConsumerWidget {
                               )
                               : null,
                       onPressed:
-                          state.isLoading
+                          state.isLoading || !state.isValid
                               ? null
                               : () async {
                                 final transaction =

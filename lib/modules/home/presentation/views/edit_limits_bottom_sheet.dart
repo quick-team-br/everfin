@@ -52,7 +52,11 @@ class EditLimitsBottomSheet extends ConsumerWidget {
             Text("Altere os limites que deseja por categoria"),
             const SizedBox(height: 24),
             ...categoryLimits.map(
-              (limit) => MoneyTextField(label: limit.name, onChanged: (_) {}),
+              (limit) => MoneyTextField(
+                label: limit.name,
+                defaultValue: limit.limit,
+                onChanged: (_) {},
+              ),
             ),
             const SizedBox(height: 20),
 

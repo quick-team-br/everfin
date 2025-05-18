@@ -20,6 +20,8 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   jwt_decoder: ^2.0.1
   dropdown_button2: ^2.3.9
+  dotted_border: ^3.0.1
+  animated_theme_switcher: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +38,8 @@ flutter:
     - assets/svgs/arrow_with_shadow_icon.svg
     - assets/svgs/search_icon.svg
     - assets/svgs/edit_icon.svg
+    - assets/svgs/trash_icon.svg
+    - assets/svgs/hamburger_menu_icon.svg
+    - assets/svgs/logo_icon.svg
+    - assets/svgs/sun_icon.svg
+    - assets/svgs/moon_icon.svg

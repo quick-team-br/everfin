@@ -26,12 +26,13 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
     total: 0,
   );
   List<ExpenseCategoryLimit> expenseCategoryLimits = [];
+  int lastTabIndex = 0;
 
   TransactionsDetails(this.ref) : super(TransactionsDetailsState()) {
     final selectedMonth = ref.read(monthSelectorProvider) + 1;
 
     state = state.copyWith(isLoading: true);
-    loadPreferences();
+    loadPreferences(selectedMonth);
     loadAllTransactionsData(selectedMonth);
   }
 
@@ -48,13 +49,24 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
     state = state.copyWith(isLoading: false, transactions: transactions);
   }
 
-  Future<void> loadPreferences() async {
-    expenseCategoryLimits =
-        await TransactionService().fetchExpenseCategoryLimits();
+  Future<void> loadPreferences(int selectedMonth) async {
+    expenseCategoryLimits = await TransactionService()
+        .fetchExpenseCategoryLimitsByMonth(selectedMonth);
   }
 
   void setFilterType(TransactionType? type) {
     state = state.copyWith(filterType: type);
+  }
+
+  void onChangeTabFilter(int index) {
+    lastTabIndex = index;
+    if (index == 0) {
+      setFilterType(null);
+    } else if (index == 1) {
+      setFilterType(TransactionType.income);
+    } else if (index == 2) {
+      setFilterType(TransactionType.expense);
+    }
   }
 
   get filteredTransactions {
@@ -99,10 +111,40 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
         color: Colors.lightBlue,
         value: categoryTotal,
         limit:
-            expenseCategoryLimits
-                .firstWhere((catLimit) => catLimit.id == categoryId)
-                .limit,
+            type == TransactionType.expense
+                ? expenseCategoryLimits
+                    .firstWhere(
+                      (catLimit) => catLimit.id == categoryId,
+                      orElse:
+                          () => ExpenseCategoryLimit(
+                            id: categoryId,
+                            limit: 0,
+                            name: categoryName,
+                          ),
+                    )
+                    .limit
+                : null,
       );
     }).toList();
+  }
+
+  Future<void> addTransaction(Transaction transaction) async {
+    state = state.copyWith(transactions: [...state.transactions, transaction]);
+  }
+
+  Future<void> editTransaction(Transaction transaction) async {
+    state = state.copyWith(
+      transactions:
+          state.transactions
+              .map((t) => t.id == transaction.id ? transaction : t)
+              .toList(),
+    );
+  }
+
+  Future<void> deleteTransaction(Transaction transaction) async {
+    state = state.copyWith(
+      transactions:
+          state.transactions.where((t) => t.id != transaction.id).toList(),
+    );
   }
 }

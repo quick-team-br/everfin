@@ -3,18 +3,26 @@ import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 
+import 'package:everfin/core/extensions/int_extensions.dart';
+
 class MoneyTextField extends StatefulWidget {
   final String label;
+  final int? defaultValue;
   final Function(int)? onChanged;
 
-  const MoneyTextField({super.key, this.label = "Valor", this.onChanged});
+  const MoneyTextField({
+    super.key,
+    this.label = "Valor",
+    this.onChanged,
+    this.defaultValue = 0,
+  });
 
   @override
   State<MoneyTextField> createState() => _MoneyTextFieldState();
 }
 
 class _MoneyTextFieldState extends State<MoneyTextField> {
-  final TextEditingController _controller = TextEditingController(text: '0,00');
+  late final TextEditingController _controller;
   final FocusNode _focusNode = FocusNode();
   bool _hasFocus = false;
 
@@ -44,6 +52,9 @@ class _MoneyTextFieldState extends State<MoneyTextField> {
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController(
+      text: widget.defaultValue?.toBRLWithoutSymbol(),
+    );
     _focusNode.addListener(() {
       setState(() {
         _hasFocus = _focusNode.hasFocus;

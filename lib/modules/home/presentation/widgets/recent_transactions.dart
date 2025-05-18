@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/presentation/view_models/home_viewmodel.dart';
+import 'package:everfin/modules/home/presentation/view_models/month_selector_viewmodel.dart';
+import 'package:everfin/modules/home/presentation/views/transaction_edit_bottom_sheet.dart';
 import 'package:everfin/modules/home/presentation/widgets/transaction_item.dart';
 
 import './section_header.dart';
@@ -31,9 +34,34 @@ class RecentTransactions extends ConsumerWidget {
           Stack(
             children: [
               Column(
+                spacing: 16,
                 children: [
                   ...transactions.map((transaction) {
-                    return TransactionItem(transaction: transaction);
+                    return TransactionItem(
+                      transaction: transaction,
+                      onTap: () async {
+                        final result =
+                            await showModalBottomSheet<(Transaction?, String?)>(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return TransactionEditBottomSheet(
+                                  transactionItem: transaction,
+                                );
+                              },
+                            );
+
+                        if (result != null) {
+                          if (result.$1 != null) {
+                            ref
+                                .read(homeProvider.notifier)
+                                .loadHomeTransactionsData(
+                                  ref.read(monthSelectorProvider) + 1,
+                                );
+                          }
+                        }
+                      },
+                    );
                   }),
                 ],
               ),

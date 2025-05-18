@@ -4,6 +4,7 @@ class AppColors {
   static const primary = Color(0xFF346BFC);
   static const primaryAlpha = Color(0x3D346BFC); // 0x3D = 24% alpha
   static const red = Color(0xFFFC3434);
+  static const redAlpha = Color(0x1FFC3434); // 0x1F = 12% alpha
 
   static const darkBackgroundPrimary = Color(0xFF0A0A0F);
   static const darkBackgroundSecondary = Color(0xFF1A1A1F);

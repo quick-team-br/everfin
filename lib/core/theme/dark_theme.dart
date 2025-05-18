@@ -16,6 +16,7 @@ class DarkTheme {
         outline: AppColors.darkBorder,
         surface: AppColors.darkBackgroundTertiary,
       ),
+      dividerColor: AppColors.darkBorder,
       textTheme: GoogleFonts.interTextTheme().copyWith(
         titleSmall: const TextStyle(
           fontSize: 20,

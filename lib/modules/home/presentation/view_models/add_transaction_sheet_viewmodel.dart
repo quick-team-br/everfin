@@ -17,20 +17,32 @@ class AddTransactionSheetViewModel
   int amount = 0;
   String description = "";
 
+  void validateTransaction() {
+    final isValid =
+        amount != 0 && description.isNotEmpty && state.category != null;
+
+    if (state.isValid != isValid) {
+      state = state.copyWith(isValid: isValid);
+    }
+  }
+
   void setType(TransactionType newSelectedType) {
     state = state.copyWith(selectedType: newSelectedType, category: null);
   }
 
   void setCategory(String? newCategory) {
     state = state.copyWith(category: newCategory);
+    validateTransaction();
   }
 
   void setAmount(int newAmount) {
     amount = newAmount;
+    validateTransaction();
   }
 
   void setDescription(String desc) {
     description = desc;
+    validateTransaction();
   }
 
   void reset() {
@@ -95,7 +107,7 @@ class AddTransactionSheetViewModel
           .toList();
 }
 
-final addTransactionSheetViewModelProvider = StateNotifierProvider<
+final addTransactionSheetViewModelProvider = StateNotifierProvider.autoDispose<
   AddTransactionSheetViewModel,
   AddTransactionSheetState
 >((ref) => AddTransactionSheetViewModel());

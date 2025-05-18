@@ -12,7 +12,7 @@ class ExpenseCategoryLimit {
   factory ExpenseCategoryLimit.fromJson(Map<String, dynamic> json) {
     return ExpenseCategoryLimit(
       id: json['category_id'],
-      limit: json["amount"],
+      limit: json["monthly_limit"],
       name: json['category_name'],
     );
   }

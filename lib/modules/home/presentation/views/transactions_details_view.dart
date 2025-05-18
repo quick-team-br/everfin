@@ -5,11 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:everfin/core/theme/app_colors.dart';
+import 'package:everfin/core/theme/app_gradients.dart';
 import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/presentation/view_models/add_transaction_sheet_viewmodel.dart';
 import 'package:everfin/modules/home/presentation/view_models/transactions_details_viewmodel.dart';
 import 'package:everfin/modules/home/presentation/views/add_transaction_bottom_sheet.dart';
 import 'package:everfin/modules/home/presentation/views/edit_limits_bottom_sheet.dart';
+import 'package:everfin/modules/home/presentation/views/transaction_edit_bottom_sheet.dart';
 import 'package:everfin/modules/home/presentation/widgets/balance_card.dart';
 import 'package:everfin/modules/home/presentation/widgets/categories_summary.dart';
 import 'package:everfin/modules/home/presentation/widgets/month_selector.dart';
@@ -27,11 +29,15 @@ class TransactionDetailsView extends ConsumerWidget {
         ref.read(transactionsDetailsProvider.notifier).filteredTransactions;
     final chartCategories =
         ref.read(transactionsDetailsProvider.notifier).chartCategories;
+    final currentFilterIsExpense =
+        transactionsDetailsState.filterType == TransactionType.expense;
     final primaryColor =
-        transactionsDetailsState.filterType == TransactionType.expense
+        currentFilterIsExpense
             ? AppColors.red
             : Theme.of(context).colorScheme.primary;
     final filterType = transactionsDetailsState.filterType;
+    final mainButtonMonthSelectorGradient =
+        currentFilterIsExpense ? AppGradients.red : null;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -74,10 +80,13 @@ class TransactionDetailsView extends ConsumerWidget {
             ),
             const SizedBox(height: 28),
             MonthSelector(
+              primaryColor: primaryColor,
+              gradient: mainButtonMonthSelectorGradient,
               onChange: (monthIndex) {
-                ref
-                    .read(transactionsDetailsProvider.notifier)
-                    .loadAllTransactionsData(monthIndex + 1);
+                final provider = ref.read(transactionsDetailsProvider.notifier);
+
+                provider.loadPreferences(monthIndex + 1);
+                provider.loadAllTransactionsData(monthIndex + 1);
               },
             ),
             const SizedBox(height: 28),
@@ -85,7 +94,7 @@ class TransactionDetailsView extends ConsumerWidget {
               const SizedBox(height: 200),
               Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  color: primaryColor,
                   strokeWidth: 1.4,
                 ),
               ),
@@ -103,21 +112,14 @@ class TransactionDetailsView extends ConsumerWidget {
                   ),
                   tabs: ['Visão Geral', 'Entrada', 'Saída'],
                   primaryColor: primaryColor,
-                  initialIndex: 0,
+                  initialIndex:
+                      ref
+                          .read(transactionsDetailsProvider.notifier)
+                          .lastTabIndex,
                   onTabChanged: (index) {
-                    if (index == 0) {
-                      ref
-                          .read(transactionsDetailsProvider.notifier)
-                          .setFilterType(null);
-                    } else if (index == 1) {
-                      ref
-                          .read(transactionsDetailsProvider.notifier)
-                          .setFilterType(TransactionType.income);
-                    } else if (index == 2) {
-                      ref
-                          .read(transactionsDetailsProvider.notifier)
-                          .setFilterType(TransactionType.expense);
-                    }
+                    ref
+                        .read(transactionsDetailsProvider.notifier)
+                        .onChangeTabFilter(index);
                   },
                 ),
               ),
@@ -141,76 +143,119 @@ class TransactionDetailsView extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) {
-                                return const AddTransactionBottomSheet();
-                              },
-                            ).whenComplete(() {
+                          onPressed: () async {
+                            final newTransaction =
+                                await showModalBottomSheet<Transaction?>(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return const AddTransactionBottomSheet();
+                                  },
+                                ).whenComplete(() {
+                                  ref
+                                      .read(
+                                        addTransactionSheetViewModelProvider
+                                            .notifier,
+                                      )
+                                      .reset();
+                                });
+
+                            if (newTransaction != null) {
                               ref
-                                  .read(
-                                    addTransactionSheetViewModelProvider
-                                        .notifier,
-                                  )
-                                  .reset();
-                            });
+                                  .read(transactionsDetailsProvider.notifier)
+                                  .addTransaction(newTransaction);
+                            }
                           },
                           icon: Icon(Icons.add),
                           label: Text("Adicionar"),
                         ),
                       ),
                     ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          shape: DashedOutlineBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            dashPattern: 8,
-                            side: BorderSide(
-                              color: Theme.of(context).colorScheme.outline,
-                              width: 1,
+                    if (currentFilterIsExpense) ...[
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                            shape: DashedOutlineBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              dashPattern: 8,
+                              side: BorderSide(
+                                color: Theme.of(context).colorScheme.outline,
+                                width: 1,
+                              ),
                             ),
                           ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return EditLimitsBottomSheet(
+                                  categoryLimits:
+                                      ref
+                                          .read(
+                                            transactionsDetailsProvider
+                                                .notifier,
+                                          )
+                                          .expenseCategoryLimits,
+                                );
+                              },
+                            );
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/svgs/edit_icon.svg',
+                            width: 24,
+                            semanticsLabel: "Icone de edição",
+                          ),
+                          label: Text("Limite"),
                         ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) {
-                              return EditLimitsBottomSheet(
-                                categoryLimits:
-                                    ref
-                                        .read(
-                                          transactionsDetailsProvider.notifier,
-                                        )
-                                        .expenseCategoryLimits,
-                              );
-                            },
-                          );
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/svgs/edit_icon.svg',
-                          width: 24,
-                          semanticsLabel: "Icone de edição",
-                        ),
-                        label: Text("Limite"),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    ...filteredTransactions.map((transaction) {
-                      return TransactionItem(transaction: transaction);
-                    }),
-                  ],
+                child: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  itemCount: filteredTransactions.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final transaction = filteredTransactions[index];
+                    return TransactionItem(
+                      transaction: transaction,
+                      onTap: () async {
+                        final result =
+                            await showModalBottomSheet<(Transaction?, String?)>(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return TransactionEditBottomSheet(
+                                  transactionItem: transaction,
+                                );
+                              },
+                            );
+
+                        if (result != null) {
+                          final (returnedTransaction, action) = result;
+
+                          if (action == "delete") {
+                            ref
+                                .read(transactionsDetailsProvider.notifier)
+                                .deleteTransaction(returnedTransaction!);
+                          } else {
+                            ref
+                                .read(transactionsDetailsProvider.notifier)
+                                .editTransaction(returnedTransaction!);
+                          }
+                        }
+                      },
+                    );
+                  },
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 12),
                 ),
               ),
               const SizedBox(height: 100),
