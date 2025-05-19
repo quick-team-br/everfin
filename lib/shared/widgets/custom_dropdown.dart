@@ -102,7 +102,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                   'assets/svgs/arrow_with_shadow_icon.svg',
                   width: 20,
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).textTheme.labelMedium?.color ??
+                    Theme.of(context).textTheme.bodyMedium?.color ??
                         Colors.black,
                     BlendMode.srcIn,
                   ),

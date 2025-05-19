@@ -127,7 +127,7 @@ class _FlipUndoButtonState extends State<FlipUndoButton>
           children: [
             Text(
               '${widget.undoLabel} (${_remainingSeconds}s)',
-              style: ButtonStyles.elevated.textStyle
+              style: ButtonStyles.elevated().textStyle
                   ?.resolve({})
                   ?.copyWith(color: AppColors.red),
             ),

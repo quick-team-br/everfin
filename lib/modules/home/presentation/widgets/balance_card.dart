@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:everfin/core/extensions/int_extensions.dart';
-import 'package:everfin/core/theme/app_colors.dart';
 
 class BalanceCard extends ConsumerWidget {
   const BalanceCard({
@@ -29,7 +28,7 @@ class BalanceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final transactionsBalanceSplit = balance.toBRL().split(',');
-    final currentPrimaryColor = primaryColor ?? AppColors.primary;
+    final currentPrimaryColor = primaryColor ?? Theme.of(context).primaryColor;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,10 +37,13 @@ class BalanceCard extends ConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           gradient: LinearGradient(
-            colors: [currentPrimaryColor, Colors.transparent],
+            colors: [
+              currentPrimaryColor,
+              Theme.of(context).scaffoldBackgroundColor,
+            ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            stops: [0.0, .75],
+            stops: [0.0, .65],
           ),
         ),
         child: Container(
@@ -64,7 +66,7 @@ class BalanceCard extends ConsumerWidget {
                     gradient: RadialGradient(
                       colors: [
                         currentPrimaryColor.withAlpha(40),
-                        Colors.transparent,
+                        Theme.of(context).scaffoldBackgroundColor.withAlpha(0),
                       ],
                       radius: .7,
                       center: const Alignment(0, -0.15),
@@ -78,7 +80,9 @@ class BalanceCard extends ConsumerWidget {
                   filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.darkBackgroundPrimary.withAlpha(2),
+                      color: Theme.of(
+                        context,
+                      ).scaffoldBackgroundColor.withAlpha(2),
                     ),
                   ),
                 ),
@@ -112,7 +116,10 @@ class BalanceCard extends ConsumerWidget {
                       children: [
                         TextSpan(
                           text: ',${transactionsBalanceSplit.last}',
-                          style: TextStyle(color: Colors.grey.shade500),
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color,
+                          ),
                         ),
                       ],
                     ),

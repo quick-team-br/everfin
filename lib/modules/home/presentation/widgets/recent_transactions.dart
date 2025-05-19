@@ -74,11 +74,13 @@ class RecentTransactions extends ConsumerWidget {
                     height: 124,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
                         colors: [
+                          Theme.of(
+                            context,
+                          ).scaffoldBackgroundColor.withAlpha(0),
                           Theme.of(context).scaffoldBackgroundColor,
-                          Colors.transparent,
                         ],
                       ),
                     ),

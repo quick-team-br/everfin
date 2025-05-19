@@ -35,7 +35,6 @@ class TransactionDetailsView extends ConsumerWidget {
         currentFilterIsExpense
             ? AppColors.red
             : Theme.of(context).colorScheme.primary;
-    final filterType = transactionsDetailsState.filterType;
     final mainButtonMonthSelectorGradient =
         currentFilterIsExpense ? AppGradients.red : null;
 
@@ -48,18 +47,23 @@ class TransactionDetailsView extends ConsumerWidget {
             BalanceCard(
               primaryColor: primaryColor,
               balanceDescription:
-                  filterType == null
-                      ? "Saldo do mês"
-                      : filterType == TransactionType.income
-                      ? "Total de entradas"
-                      : "Total de saídas",
+                  ref
+                      .read(transactionsDetailsProvider.notifier)
+                      .balanceDescription,
               balance:
-                  ref.read(transactionsDetailsProvider.notifier).balance.total,
+                  ref
+                      .read(transactionsDetailsProvider.notifier)
+                      .balanceValueByType,
               headerActionLeft: IconButton.outlined(
                 icon: SvgPicture.asset(
                   'assets/svgs/left_arrow_icon.svg',
                   width: 24,
                   semanticsLabel: 'Seta apontando para esquerda',
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).textTheme.titleLarge?.color ??
+                        Colors.black,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 onPressed: () {
                   context.go("/home");
@@ -74,6 +78,11 @@ class TransactionDetailsView extends ConsumerWidget {
                   'assets/svgs/search_icon.svg',
                   width: 24,
                   semanticsLabel: 'Lupa de pesquisa',
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).textTheme.titleLarge?.color ??
+                        Colors.black,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 onPressed: () {},
               ),
@@ -206,6 +215,11 @@ class TransactionDetailsView extends ConsumerWidget {
                             'assets/svgs/edit_icon.svg',
                             width: 24,
                             semanticsLabel: "Icone de edição",
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).textTheme.bodyMedium?.color ??
+                                  Colors.black,
+                              BlendMode.srcIn,
+                            ),
                           ),
                           label: Text("Limite"),
                         ),

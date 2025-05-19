@@ -41,7 +41,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         TextField(
           controller: _controller,
           onChanged: widget.onChanged,
-          style: const TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyMedium,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

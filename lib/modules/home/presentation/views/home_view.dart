@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
 import 'package:everfin/modules/auth/controller/auth_controller.dart';
 import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/presentation/view_models/add_transaction_sheet_viewmodel.dart';
@@ -42,6 +41,11 @@ class HomeView extends ConsumerWidget {
                   'assets/svgs/hamburger_menu_icon.svg',
                   width: 24,
                   semanticsLabel: 'Icone de menu',
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).textTheme.titleLarge?.color ??
+                        Colors.black,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 onPressed: () {
                   scaffoldKey.currentState?.openDrawer();
@@ -67,7 +71,7 @@ class HomeView extends ConsumerWidget {
                 radius: 20,
                 child: Text(
                   user!.name[0].toUpperCase(),
-                  style: TextStyle(color: AppColors.lightText),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

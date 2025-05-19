@@ -27,7 +27,7 @@ class AddTransactionBottomSheet extends ConsumerWidget {
         borderRadius: BorderRadius.circular(31.5),
         gradient: RadialGradient(
           center: Alignment.topCenter,
-          radius: 1,
+          radius: .7,
           colors: [
             viewModel.getGradientColor(context).withAlpha(36),
             Colors.transparent,

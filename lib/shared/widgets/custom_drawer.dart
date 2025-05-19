@@ -50,6 +50,8 @@ class CustomDrawer extends StatelessWidget {
                       ),
                 ),
               ),
+              if (Theme.of(context).platform == TargetPlatform.android)
+                const SizedBox(height: 16),
             ],
           ),
         ),

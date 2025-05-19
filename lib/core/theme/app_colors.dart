@@ -10,10 +10,13 @@ class AppColors {
   static const darkBackgroundSecondary = Color(0xFF1A1A1F);
   static const darkBackgroundTertiary = Color(0xFF101013);
   static const darkBorder = Color(0xFF27272A);
-  static const lightText = Color(0xFFFCFCFC);
-  static const fadedText = Color(0xFFBFBFC8);
+  static const darkPrimaryText = Color(0xFFFCFCFC);
+  static const darkSecondaryText = Color(0xFFBFBFC8);
 
-  // (Para tema claro depois)
-  static const lightBackground = Color(0xFFF2F2F2);
-  static const darkText = Colors.black;
+  static const lightBackgroundPrimary = Color(0xFFF5F5F5);
+  static const lightBackgroundSecondary = Color(0xFFFFFFFF);
+  static const lightBackgroundTertiary = Color(0xFFEFEFEF);
+  static const lightBorder = Color(0xFFD8D8D8);
+  static const lightPrimaryText = Color(0xFF121212);
+  static const lightSecondaryText = Color(0xFF5C5C5C);
 }

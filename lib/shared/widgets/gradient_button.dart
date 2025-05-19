@@ -77,7 +77,7 @@ class _GradientButtonState extends State<GradientButton> {
                   children: [
                     Text(
                       widget.text,
-                      style: ButtonStyles.elevated.textStyle?.resolve({}),
+                      style: ButtonStyles.elevated().textStyle?.resolve({}),
                     ),
                     if (widget.icon != null) ...[
                       const SizedBox(width: 8),

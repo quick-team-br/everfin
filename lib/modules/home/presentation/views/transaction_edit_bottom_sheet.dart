@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:everfin/core/theme/app_colors.dart';
 import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/core/theme/styles/button_styles.dart';
 import 'package:everfin/modules/home/models/transaction_model.dart';
 import 'package:everfin/modules/home/presentation/view_models/transaction_edit_sheet_viewmodel.dart';
 import 'package:everfin/shared/widgets/custom_dropdown.dart';
@@ -54,8 +53,11 @@ class _TransactionEditBottomSheetState
         borderRadius: BorderRadius.circular(31.5),
         gradient: RadialGradient(
           center: Alignment.topCenter,
-          radius: 1,
-          colors: [primaryColor.withAlpha(36), Colors.transparent],
+          radius: 0.7,
+          colors: [
+            primaryColor.withAlpha(36),
+            Theme.of(context).cardColor.withAlpha(0),
+          ],
         ),
       ),
       child: Padding(
@@ -144,7 +146,7 @@ class _TransactionEditBottomSheetState
                     children: [
                       Text(
                         "Excluir",
-                        style: ButtonStyles.elevated.textStyle?.resolve({}),
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                       SvgPicture.asset(
                         'assets/svgs/trash_icon.svg',

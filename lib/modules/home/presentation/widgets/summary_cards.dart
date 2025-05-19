@@ -46,6 +46,13 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkColorIconBox =
+        type == SummaryCardType.income ? Color(0xFF0A0A17) : Color(0xFF170A0A);
+    final lightColorIconBox =
+        type == SummaryCardType.income ? Color(0xFFEEEEFB) : Color(0xFFFBEEEE);
+
+    print(Theme.of(context).brightness);
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -59,10 +66,18 @@ class _SummaryCard extends StatelessWidget {
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color:
-                    type == SummaryCardType.income
-                        ? Color(0xFF0A0A17)
-                        : Color(0xFF170A0A),
+                    Theme.of(context).brightness == Brightness.dark
+                        ? darkColorIconBox
+                        : lightColorIconBox,
                 borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.02),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
               child: Transform.rotate(
                 angle:

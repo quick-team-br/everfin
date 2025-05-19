@@ -78,6 +78,26 @@ class TransactionsDetails extends StateNotifier<TransactionsDetailsState> {
         .toList();
   }
 
+  get balanceDescription {
+    if (state.filterType == null) {
+      return "Saldo total";
+    } else if (state.filterType == TransactionType.income) {
+      return "Entradas";
+    } else if (state.filterType == TransactionType.expense) {
+      return "Saídas";
+    }
+  }
+
+  get balanceValueByType {
+    if (state.filterType == null) {
+      return balance.total;
+    } else if (state.filterType == TransactionType.income) {
+      return balance.totalIncome;
+    } else if (state.filterType == TransactionType.expense) {
+      return balance.totalExpense;
+    }
+  }
+
   List<SummaryRowData> get chartCategories {
     if (state.filterType == null) {
       return [

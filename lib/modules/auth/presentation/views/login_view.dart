@@ -111,6 +111,11 @@ class LoginView extends ConsumerWidget {
                         'assets/svgs/right_up_arrow_icon.svg',
                         width: 24,
                         semanticsLabel: 'Seta apontando na diagonal para cima',
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).textTheme.titleLarge?.color ??
+                              Colors.black,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ),

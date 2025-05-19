@@ -90,13 +90,13 @@ class _MoneyTextFieldState extends State<MoneyTextField> {
           child: TextField(
             controller: _controller,
             focusNode: _focusNode,
-            style: const TextStyle(color: Colors.white),
+            style: Theme.of(context).textTheme.bodyMedium,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: _onTextChanged,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               prefixText: 'R\$ ',
-              prefixStyle: TextStyle(color: Colors.white70),
+              prefixStyle: Theme.of(context).textTheme.bodyMedium,
               border: InputBorder.none,
             ),
           ),

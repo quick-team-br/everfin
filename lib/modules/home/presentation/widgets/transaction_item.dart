@@ -23,6 +23,14 @@ class TransactionItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.02),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 12, bottom: 12, right: 16),
@@ -58,6 +66,11 @@ class TransactionItem extends StatelessWidget {
                             'assets/svgs/arrow_with_shadow_icon.svg',
                             width: 20,
                             semanticsLabel: "Abrir",
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).textTheme.bodyMedium?.color ??
+                                  Colors.black,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ],
