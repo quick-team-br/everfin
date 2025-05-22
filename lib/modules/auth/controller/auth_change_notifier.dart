@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:everfin/modules/auth/models/auth_state.dart';
+
 import 'auth_controller.dart';
 
 class AuthChangeNotifier extends ChangeNotifier {

@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/auth/presentation/view_models/login_view_model.dart';
+import 'package:everfin/modules/auth/presentation/views/login_bottom_sheet.dart';
+import 'package:everfin/modules/auth/presentation/views/register_bottom_sheet.dart';
 import 'package:everfin/shared/widgets/gradient_button.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(loginViewProvider).isLoading;
-    final authNotifier = ref.read(loginViewProvider.notifier);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -78,34 +75,35 @@ class LoginView extends ConsumerWidget {
                   const SizedBox(height: 32),
 
                   GradientButton(
-                    onPressed: isLoading ? null : () => authNotifier.login(),
-                    text: isLoading ? "Fazendo login" : "Fazer login",
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        builder: (_) {
+                          return LoginBottomSheet();
+                        },
+                      );
+                    },
+                    text: "Fazer login",
                     gradient: AppGradients.primary,
-                    icon:
-                        isLoading
-                            ? Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 1,
-                                ),
-                              ),
-                            )
-                            : SvgPicture.asset(
-                              'assets/svgs/right_up_arrow_icon.svg',
-                              width: 24,
-                              semanticsLabel:
-                                  'Seta apontando na diagonal para cima',
-                            ),
+                    icon: SvgPicture.asset(
+                      'assets/svgs/right_up_arrow_icon.svg',
+                      width: 24,
+                      semanticsLabel: 'Seta apontando na diagonal para cima',
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (_) {
+                            return RegisterBottomSheet();
+                          },
+                        );
+                      },
                       label: const Text('Criar uma conta'),
                       icon: SvgPicture.asset(
                         'assets/svgs/right_up_arrow_icon.svg',

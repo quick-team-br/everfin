@@ -15,6 +15,7 @@ class LightTheme {
         primary: AppColors.primary,
         outline: AppColors.lightBorder,
         surface: AppColors.lightBackgroundTertiary,
+        error: AppColors.red,
       ),
       dividerColor: AppColors.lightBorder,
       textTheme:

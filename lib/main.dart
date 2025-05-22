@@ -9,6 +9,8 @@ void main() {
   runApp(const ProviderScope(child: MainApp()));
 }
 
+final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.dark);
+
 class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
@@ -16,10 +18,17 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
 
-    return MaterialApp.router(
-      routerConfig: router,
-      theme: AppTheme.dark,
-      debugShowCheckedModeBanner: false,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, currentTheme, _) {
+        return MaterialApp.router(
+          routerConfig: router,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: currentTheme,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

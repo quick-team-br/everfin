@@ -14,6 +14,7 @@ class DarkTheme {
         primary: AppColors.primary,
         outline: AppColors.darkBorder,
         surface: AppColors.darkBackgroundTertiary,
+        error: AppColors.red,
       ),
       dividerColor: AppColors.darkBorder,
       textTheme:

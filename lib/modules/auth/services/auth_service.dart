@@ -1,109 +1,98 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
-import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
+import 'package:everfin/core/services/network/dio_client.dart';
+import 'package:everfin/core/services/storage/secure_storage_service.dart';
 import 'package:everfin/modules/auth/models/user_model.dart';
 
-import '../models/auth_model.dart';
-
 class AuthService {
-  final _storage = const FlutterSecureStorage();
+  final Dio _dio;
+  final SecureStorageService _storage;
 
-  final String _clientId = 'quick-mobile';
-  final String _redirectUri = 'everfin://callback';
-  final String _authorizationEndpoint =
-      'https://auth.quickteam.com.br/dex/auth';
-  final String _tokenEndpoint = 'https://auth.quickteam.com.br/dex/token';
-  final String _clientSecret = 'quick-mobile-secret';
+  static const _userStorageKey = 'user_data';
+  static const _tokenStorageKey = 'access_token';
+  static const _refreshTokenStorageKey = 'refresh_token';
 
-  String _generateCodeVerifier() {
-    final random = Random.secure();
-    final values = List<int>.generate(64, (_) => random.nextInt(256));
-    return base64UrlEncode(values).replaceAll('=', '');
-  }
+  AuthService(this._storage, this._dio);
 
-  String _generateCodeChallenge(String verifier) {
-    final bytes = utf8.encode(verifier);
-    final digest = sha256.convert(bytes);
-    return base64UrlEncode(digest.bytes).replaceAll('=', '');
-  }
-
-  Future<AuthToken?> oAuthLogin() async {
-    final codeVerifier = _generateCodeVerifier();
-    final codeChallenge = _generateCodeChallenge(codeVerifier);
-
-    final url =
-        '$_authorizationEndpoint?response_type=code&client_id=$_clientId&redirect_uri=$_redirectUri&scope=openid%20email%20profile&code_challenge=$codeChallenge&code_challenge_method=S256';
-
+  Future<User?> login(String email, String password) async {
     try {
-      final result = await FlutterWebAuth2.authenticate(
-        url: url,
-        callbackUrlScheme: 'everfin',
-        options: const FlutterWebAuth2Options(preferEphemeral: false),
-      );
+      final mockToken =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20ifQ.kG6vYXOdNFzHJFNUGY6qFOIQT9h_gKkLnqZrLTDQf8E';
 
-      final code = Uri.parse(result).queryParameters['code'];
-      if (code == null) throw Exception('Code not found');
+      await _storage.write(_tokenStorageKey, mockToken);
 
-      final response = await http.post(
-        Uri.parse(_tokenEndpoint),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: {
-          'grant_type': 'authorization_code',
-          'client_id': _clientId,
-          'redirect_uri': _redirectUri,
-          'code': code,
-          'code_verifier': codeVerifier,
-          'client_secret': _clientSecret,
-        },
-      );
+      final user = extractUserFromToken(mockToken);
+      await _storage.write(_userStorageKey, jsonEncode(user.toJson()));
 
-      if (response.statusCode == 200) {
-        return AuthToken.fromJson(json.decode(response.body));
-      } else {
-        throw Exception('Token exchange failed: ${response.body}');
-      }
+      return user;
     } catch (e) {
       print('Login failed: $e');
       return null;
     }
   }
 
-  Future<void> saveAuthData(String token, UserModel user) async {
-    await _storage.write(key: 'access_token', value: token);
-    await _storage.write(key: 'user_data', value: jsonEncode(user.toJson()));
+  Future<User?> register(
+    String name,
+    String email,
+    String password,
+    int phone,
+  ) async {
+    try {
+      print("object: aaa");
+      return User(email: email, name: name);
+    } catch (e) {
+      print('Register failed: $e');
+      return null;
+    }
   }
 
   Future<String?> getToken() async {
-    return _storage.read(key: 'access_token');
+    return _storage.read(_tokenStorageKey);
   }
 
-  Future<UserModel?> getUser() async {
-    final data = await _storage.read(key: 'user_data');
+  Future<User?> getCurrentUser() async {
+    final data = await _storage.read(_userStorageKey);
     if (data != null) {
-      return UserModel.fromJson(jsonDecode(data));
+      return User.fromJson(jsonDecode(data));
     }
     return null;
   }
 
   Future<void> logout() async {
-    await _storage.deleteAll();
+    await _storage.clear();
   }
 
-  UserModel extractUserFromToken(String token) {
+  Future<bool> refreshToken() async {
+    try {
+      final token = await getToken();
+      if (token == null) return false;
+
+      final newToken =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20ifQ.kG6vYXOdNFzHJFNUGY6qFOIQT9h_gKkLnqZrLTDQf8E';
+
+      return true;
+    } catch (e) {
+      print('Token refresh failed: $e');
+      return false;
+    }
+  }
+
+  User extractUserFromToken(String token) {
     final decodedToken = JwtDecoder.decode(token);
 
-    return UserModel(
+    return User(
       name: decodedToken['name'] ?? 'Sem nome',
       email: decodedToken['email'] ?? 'sem@email.com',
     );
   }
 }
 
-final authServiceProvider = Provider<AuthService>((ref) => AuthService());
+final authServiceProvider = Provider<AuthService>((ref) {
+  final dio = ref.read(dioClientProvider);
+  final storage = ref.read(secureStorageProvider);
+  return AuthService(storage, dio);
+});

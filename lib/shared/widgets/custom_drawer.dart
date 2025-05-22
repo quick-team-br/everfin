@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'package:everfin/main.dart';
 import 'package:everfin/modules/auth/controller/auth_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -10,6 +11,8 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = themeNotifier.value == ThemeMode.dark;
+
     return Drawer(
       child: SafeArea(
         child: Padding(
@@ -33,9 +36,38 @@ class CustomDrawer extends StatelessWidget {
                       color: Theme.of(context).textTheme.titleSmall?.color,
                     ),
                   ),
+                  const Spacer(),
+                  IconButton(
+                    icon:
+                        isDark
+                            ? SvgPicture.asset(
+                              'assets/svgs/sun_icon.svg',
+                              width: 24,
+                              semanticsLabel: 'Icone de sol',
+                            )
+                            : SvgPicture.asset(
+                              'assets/svgs/moon_icon.svg',
+                              width: 24,
+                              semanticsLabel: 'Icone de lua',
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).textTheme.bodyMedium?.color ??
+                                    Colors.black,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                    tooltip: 'Alternar tema',
+                    onPressed: () {
+                      Navigator.of(context).pop();
+
+                      Future.delayed(Duration(milliseconds: 300), () {
+                        themeNotifier.value =
+                            isDark ? ThemeMode.light : ThemeMode.dark;
+                      });
+                    },
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
               Divider(color: Theme.of(context).dividerColor),
               const SizedBox(height: 20),
               const Spacer(),
