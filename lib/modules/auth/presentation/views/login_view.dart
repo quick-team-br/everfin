@@ -39,9 +39,9 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   SvgPicture.asset(
-                    'assets/svgs/everfin_logo_art.svg',
+                    'assets/svgs/desenrolai_logo_art.svg',
                     width: MediaQuery.of(context).size.width,
-                    semanticsLabel: 'Everfin Logo',
+                    semanticsLabel: 'Desenrola ai Logo',
                   ),
                 ],
               ),
@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Everfin',
+                    'DesenrolAI',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -64,12 +64,12 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Seu dinheiro +Inteligente',
+                    'Seu assistente digital',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Controle de gastos pelo WhatsApp, metas financeiras, aporte inteligente e muito mais!',
+                    'É só mandar o que você precisa que a gente desenrola!',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 32),

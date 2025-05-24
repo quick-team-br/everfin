@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_native_splash (2.4.3):
+    - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_web_auth_2 (3.0.0):
@@ -12,6 +14,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_auth_2 (from `.symlinks/plugins/flutter_web_auth_2/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -20,6 +23,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_web_auth_2:
@@ -31,6 +36,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   flutter_web_auth_2: 5c8d9dcd7848b5a9efb086d24e7a9adcae979c80
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
