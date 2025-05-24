@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import 'package:everfin/core/services/network/dio_client.dart';
-import 'package:everfin/core/services/storage/secure_storage_service.dart';
-import 'package:everfin/modules/auth/models/user_model.dart';
+import 'package:desenrolai/core/services/network/dio_client.dart';
+import 'package:desenrolai/core/services/storage/secure_storage_service.dart';
+import 'package:desenrolai/modules/auth/models/user_model.dart';
 
 class AuthService {
   final Dio _dio;

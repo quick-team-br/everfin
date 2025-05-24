@@ -1,5 +1,5 @@
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/models/transactions_balance.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/models/transactions_balance.dart';
 
 class TransactionsDetailsState {
   final bool isLoading;

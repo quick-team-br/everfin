@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:everfin/core/theme/styles/button_styles.dart';
-import 'package:everfin/core/theme/styles/text_styles.dart';
+import 'package:desenrolai/core/theme/styles/button_styles.dart';
+import 'package:desenrolai/core/theme/styles/text_styles.dart';
 
 import 'app_colors.dart';
 

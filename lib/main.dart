@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/routes/app_router.dart';
-import 'package:everfin/core/theme/app_theme.dart';
+import 'package:desenrolai/core/routes/app_router.dart';
+import 'package:desenrolai/core/theme/app_theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: MainApp()));

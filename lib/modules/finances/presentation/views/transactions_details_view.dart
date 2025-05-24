@@ -4,20 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/presentation/view_models/add_transaction_sheet_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/view_models/transactions_details_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/views/add_transaction_bottom_sheet.dart';
-import 'package:everfin/modules/finances/presentation/views/edit_limits_bottom_sheet.dart';
-import 'package:everfin/modules/finances/presentation/views/transaction_edit_bottom_sheet.dart';
-import 'package:everfin/modules/finances/presentation/widgets/balance_card.dart';
-import 'package:everfin/modules/finances/presentation/widgets/categories_summary.dart';
-import 'package:everfin/modules/finances/presentation/widgets/month_selector.dart';
-import 'package:everfin/modules/finances/presentation/widgets/transaction_item.dart';
-import 'package:everfin/shared/helpers/dashed_outline_border.dart';
-import 'package:everfin/shared/widgets/custom_tab_selector.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/add_transaction_sheet_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/transactions_details_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/views/add_transaction_bottom_sheet.dart';
+import 'package:desenrolai/modules/finances/presentation/views/edit_limits_bottom_sheet.dart';
+import 'package:desenrolai/modules/finances/presentation/views/transaction_edit_bottom_sheet.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/balance_card.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/categories_summary.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/month_selector.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/transaction_item.dart';
+import 'package:desenrolai/shared/helpers/dashed_outline_border.dart';
+import 'package:desenrolai/shared/widgets/custom_tab_selector.dart';
 
 class TransactionDetailsView extends ConsumerWidget {
   const TransactionDetailsView({super.key});

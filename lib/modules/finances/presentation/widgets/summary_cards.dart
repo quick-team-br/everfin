@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/extensions/int_extensions.dart';
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/modules/finances/presentation/view_models/home_viewmodel.dart';
+import 'package:desenrolai/core/extensions/int_extensions.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/home_viewmodel.dart';
 
 class SummaryCards extends ConsumerWidget {
   const SummaryCards({super.key});

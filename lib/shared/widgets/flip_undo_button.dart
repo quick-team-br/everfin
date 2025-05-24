@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/core/theme/styles/button_styles.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/core/theme/styles/button_styles.dart';
 
 class FlipUndoButton extends StatefulWidget {
   final VoidCallback? onConfirmed;

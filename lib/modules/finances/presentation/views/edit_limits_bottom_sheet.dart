@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/finances/models/transaction_category_limit.dart';
-import 'package:everfin/shared/widgets/gradient_button.dart';
-import 'package:everfin/shared/widgets/modey_text_field.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category_limit.dart';
+import 'package:desenrolai/shared/widgets/gradient_button.dart';
+import 'package:desenrolai/shared/widgets/modey_text_field.dart';
 
 class EditLimitsBottomSheet extends ConsumerWidget {
   final List<ExpenseCategoryLimit> categoryLimits;

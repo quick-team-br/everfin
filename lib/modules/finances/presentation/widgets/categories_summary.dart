@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:everfin/core/extensions/int_extensions.dart';
+import 'package:desenrolai/core/extensions/int_extensions.dart';
 
 class CategoriesSummary extends StatelessWidget {
   final List<SummaryRowData> items;

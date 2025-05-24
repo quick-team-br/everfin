@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/modules/auth/controller/auth_controller.dart';
-import 'package:everfin/modules/auth/models/login_modal_state.dart';
+import 'package:desenrolai/modules/auth/controller/auth_controller.dart';
+import 'package:desenrolai/modules/auth/models/login_modal_state.dart';
 
 class LoginModalViewModel extends StateNotifier<LoginModalState> {
   final Ref ref;

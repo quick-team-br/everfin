@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/auth/presentation/views/login_bottom_sheet.dart';
-import 'package:everfin/modules/auth/presentation/views/register_bottom_sheet.dart';
-import 'package:everfin/shared/widgets/gradient_button.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/auth/presentation/views/login_bottom_sheet.dart';
+import 'package:desenrolai/modules/auth/presentation/views/register_bottom_sheet.dart';
+import 'package:desenrolai/shared/widgets/gradient_button.dart';
 
 import '../../../../core/theme/app_colors.dart';
 

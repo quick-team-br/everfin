@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/extensions/list_extensions.dart';
-import 'package:everfin/modules/finances/models/transaction_category_limit.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/models/transactions_balance.dart';
-import 'package:everfin/modules/finances/models/transactions_details_state.dart';
-import 'package:everfin/modules/finances/presentation/widgets/categories_summary.dart';
+import 'package:desenrolai/core/extensions/list_extensions.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category_limit.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/models/transactions_balance.dart';
+import 'package:desenrolai/modules/finances/models/transactions_details_state.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/categories_summary.dart';
 
 import '../../services/transaction_service.dart';
 

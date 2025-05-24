@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
 
 class ButtonStyles {
   static ButtonStyle elevated() {

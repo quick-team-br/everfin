@@ -1,6 +1,6 @@
-import 'package:everfin/modules/finances/models/transaction_category.dart';
-import 'package:everfin/modules/finances/models/transaction_category_limit.dart';
-import 'package:everfin/modules/finances/models/transactions_balance.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category_limit.dart';
+import 'package:desenrolai/modules/finances/models/transactions_balance.dart';
 
 import '../models/transaction_model.dart';
 

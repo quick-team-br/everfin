@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 
-import 'package:everfin/core/extensions/int_extensions.dart';
+import 'package:desenrolai/core/extensions/int_extensions.dart';
 
 class MoneyTextField extends StatefulWidget {
   final String label;

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:everfin/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 
 class TransactionCategory {
   final String description;

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/modules/finances/models/home_state.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/models/transactions_balance.dart';
+import 'package:desenrolai/modules/finances/models/home_state.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/models/transactions_balance.dart';
 
 import '../../services/transaction_service.dart';
 

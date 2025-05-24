@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/main.dart';
-import 'package:everfin/modules/auth/controller/auth_controller.dart';
+import 'package:desenrolai/main.dart';
+import 'package:desenrolai/modules/auth/controller/auth_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -25,7 +25,7 @@ class CustomDrawer extends StatelessWidget {
                   SvgPicture.asset(
                     'assets/svgs/logo_icon.svg',
                     width: 32,
-                    semanticsLabel: 'Logo everfin',
+                    semanticsLabel: 'Logo desenrolai',
                   ),
                   const SizedBox(width: 12),
                   Text(

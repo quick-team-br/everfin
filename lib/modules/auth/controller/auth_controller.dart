@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/modules/auth/models/auth_state.dart';
+import 'package:desenrolai/modules/auth/models/auth_state.dart';
 
 import '../services/auth_service.dart';
 

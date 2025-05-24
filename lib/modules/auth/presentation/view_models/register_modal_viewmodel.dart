@@ -1,8 +1,8 @@
 import 'package:flutter_multi_formatter/formatters/formatter_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/modules/auth/controller/auth_controller.dart';
-import 'package:everfin/modules/auth/models/sign_up_modal_state.dart';
+import 'package:desenrolai/modules/auth/controller/auth_controller.dart';
+import 'package:desenrolai/modules/auth/models/sign_up_modal_state.dart';
 
 class RegisterModalViewModel extends StateNotifier<SignUpModalState> {
   final Ref ref;

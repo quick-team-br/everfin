@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/modules/finances/models/transaction_edit_state.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/services/transaction_service.dart';
+import 'package:desenrolai/modules/finances/models/transaction_edit_state.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/services/transaction_service.dart';
 
 class TransactionEditSheetViewModel
     extends StateNotifier<TransactionEditSheetState> {

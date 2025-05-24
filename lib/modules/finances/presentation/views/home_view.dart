@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/modules/auth/controller/auth_controller.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/presentation/view_models/add_transaction_sheet_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/view_models/home_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/views/add_transaction_bottom_sheet.dart';
-import 'package:everfin/modules/finances/presentation/widgets/balance_card.dart';
-import 'package:everfin/modules/finances/presentation/widgets/month_selector.dart';
-import 'package:everfin/modules/finances/presentation/widgets/recent_transactions.dart';
-import 'package:everfin/modules/finances/presentation/widgets/summary_cards.dart';
-import 'package:everfin/shared/widgets/custom_drawer.dart';
+import 'package:desenrolai/modules/auth/controller/auth_controller.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/add_transaction_sheet_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/home_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/views/add_transaction_bottom_sheet.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/balance_card.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/month_selector.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/recent_transactions.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/summary_cards.dart';
+import 'package:desenrolai/shared/widgets/custom_drawer.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});

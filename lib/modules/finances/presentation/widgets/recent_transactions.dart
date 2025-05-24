@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/presentation/view_models/home_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/view_models/month_selector_viewmodel.dart';
-import 'package:everfin/modules/finances/presentation/views/transaction_edit_bottom_sheet.dart';
-import 'package:everfin/modules/finances/presentation/widgets/transaction_item.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/home_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/month_selector_viewmodel.dart';
+import 'package:desenrolai/modules/finances/presentation/views/transaction_edit_bottom_sheet.dart';
+import 'package:desenrolai/modules/finances/presentation/widgets/transaction_item.dart';
 
 import 'section_header.dart';
 

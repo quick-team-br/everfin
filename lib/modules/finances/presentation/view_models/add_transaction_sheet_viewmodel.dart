@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/modules/finances/models/add_transaction_sheet_state.dart';
-import 'package:everfin/modules/finances/models/transaction_category.dart';
-import 'package:everfin/modules/finances/services/transaction_service.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/modules/finances/models/add_transaction_sheet_state.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category.dart';
+import 'package:desenrolai/modules/finances/services/transaction_service.dart';
 
 import '../../models/transaction_model.dart';
 

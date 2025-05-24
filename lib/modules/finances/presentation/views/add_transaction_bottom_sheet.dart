@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/shared/widgets/custom_dropdown.dart';
-import 'package:everfin/shared/widgets/custom_tab_selector.dart';
-import 'package:everfin/shared/widgets/custom_textfield.dart';
-import 'package:everfin/shared/widgets/gradient_button.dart';
-import 'package:everfin/shared/widgets/modey_text_field.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/shared/widgets/custom_dropdown.dart';
+import 'package:desenrolai/shared/widgets/custom_tab_selector.dart';
+import 'package:desenrolai/shared/widgets/custom_textfield.dart';
+import 'package:desenrolai/shared/widgets/gradient_button.dart';
+import 'package:desenrolai/shared/widgets/modey_text_field.dart';
 
 import '../view_models/add_transaction_sheet_viewmodel.dart';
 

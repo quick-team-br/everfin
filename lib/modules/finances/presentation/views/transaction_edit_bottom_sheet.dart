@@ -4,15 +4,15 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
-import 'package:everfin/modules/finances/presentation/view_models/transaction_edit_sheet_viewmodel.dart';
-import 'package:everfin/shared/widgets/custom_dropdown.dart';
-import 'package:everfin/shared/widgets/custom_textfield.dart';
-import 'package:everfin/shared/widgets/flip_undo_button.dart';
-import 'package:everfin/shared/widgets/gradient_button.dart';
-import 'package:everfin/shared/widgets/modey_text_field.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/presentation/view_models/transaction_edit_sheet_viewmodel.dart';
+import 'package:desenrolai/shared/widgets/custom_dropdown.dart';
+import 'package:desenrolai/shared/widgets/custom_textfield.dart';
+import 'package:desenrolai/shared/widgets/flip_undo_button.dart';
+import 'package:desenrolai/shared/widgets/gradient_button.dart';
+import 'package:desenrolai/shared/widgets/modey_text_field.dart';
 
 class TransactionEditBottomSheet extends ConsumerStatefulWidget {
   final Transaction transactionItem;

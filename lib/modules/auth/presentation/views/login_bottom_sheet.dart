@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/theme/app_gradients.dart';
-import 'package:everfin/modules/auth/presentation/view_models/login_modal_viewmodel.dart';
-import 'package:everfin/shared/widgets/custom_textfield.dart';
-import 'package:everfin/shared/widgets/gradient_button.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
+import 'package:desenrolai/modules/auth/presentation/view_models/login_modal_viewmodel.dart';
+import 'package:desenrolai/shared/widgets/custom_textfield.dart';
+import 'package:desenrolai/shared/widgets/gradient_button.dart';
 
 class LoginBottomSheet extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();

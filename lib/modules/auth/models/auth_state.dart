@@ -1,4 +1,4 @@
-import 'package:everfin/modules/auth/models/user_model.dart';
+import 'package:desenrolai/modules/auth/models/user_model.dart';
 
 enum AuthStatus { loading, authenticated, unauthenticated }
 

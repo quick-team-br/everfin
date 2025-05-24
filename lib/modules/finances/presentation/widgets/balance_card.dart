@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:everfin/core/extensions/int_extensions.dart';
+import 'package:desenrolai/core/extensions/int_extensions.dart';
 
 class BalanceCard extends ConsumerWidget {
   const BalanceCard({

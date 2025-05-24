@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/extensions/int_extensions.dart';
-import 'package:everfin/core/theme/app_colors.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/core/extensions/int_extensions.dart';
+import 'package:desenrolai/core/theme/app_colors.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction transaction;

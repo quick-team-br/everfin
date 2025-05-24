@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:everfin/core/theme/app_gradients.dart';
+import 'package:desenrolai/core/theme/app_gradients.dart';
 
 import '../view_models/month_selector_viewmodel.dart';
 

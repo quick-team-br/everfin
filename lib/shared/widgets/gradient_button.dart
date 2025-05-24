@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:everfin/core/theme/styles/button_styles.dart';
+import 'package:desenrolai/core/theme/styles/button_styles.dart';
 
 class GradientButton extends StatefulWidget {
   final String text;

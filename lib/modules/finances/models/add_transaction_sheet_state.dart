@@ -1,5 +1,5 @@
-import 'package:everfin/modules/finances/models/transaction_category.dart';
-import 'package:everfin/modules/finances/models/transaction_model.dart';
+import 'package:desenrolai/modules/finances/models/transaction_category.dart';
+import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 
 class AddTransactionSheetState {
   final TransactionType selectedType;

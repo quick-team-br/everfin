@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:everfin/modules/auth/models/auth_state.dart';
+import 'package:desenrolai/modules/auth/models/auth_state.dart';
 
 import '../../modules/auth/controller/auth_change_notifier.dart';
 import '../../modules/auth/controller/auth_controller.dart';
