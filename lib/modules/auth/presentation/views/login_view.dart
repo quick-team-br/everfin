@@ -78,6 +78,7 @@ class LoginView extends StatelessWidget {
                     onPressed: () async {
                       await showModalBottomSheet(
                         context: context,
+                        isScrollControlled: true,
                         builder: (_) {
                           return LoginBottomSheet();
                         },
