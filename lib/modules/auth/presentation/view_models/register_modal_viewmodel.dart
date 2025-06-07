@@ -62,17 +62,10 @@ class RegisterModalViewModel extends StateNotifier<SignUpModalState> {
   Future<bool> register() async {
     state = state.copyWith(isLoading: true, error: null);
 
-    print("register: $_name, $_email, $_password, $_phone");
-
     try {
       await ref
           .read(authControllerProvider.notifier)
-          .registerAndLogin(
-            _name,
-            _email,
-            _password,
-            int.parse(toNumericString(_phone)),
-          );
+          .registerAndLogin(_name, _email, _password, toNumericString(_phone));
 
       state = state.copyWith(isLoading: false, error: null);
       return true;

@@ -61,16 +61,16 @@ class _GradientButtonState extends State<GradientButton> {
           onTap: widget.onPressed,
           borderRadius: BorderRadius.circular(widget.borderRadius),
           child: Ink(
+            decoration: BoxDecoration(
+              gradient: widget.gradient,
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+            ),
             child: AnimatedOpacity(
               opacity: isDisabled ? 0.5 : 1.0,
               duration: const Duration(milliseconds: 300),
               child: Container(
                 padding: widget.padding,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: widget.gradient,
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,

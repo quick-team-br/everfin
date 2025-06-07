@@ -24,7 +24,7 @@ class HomeView extends ConsumerWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final homeState = ref.watch(homeProvider);
 
-    final user = ref.watch(authControllerProvider).user;
+    final user = ref.read(authControllerProvider).user;
 
     return Scaffold(
       key: scaffoldKey,

@@ -6,7 +6,9 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 import 'package:desenrolai/core/services/network/dio_client.dart';
 import 'package:desenrolai/core/services/storage/secure_storage_service.dart';
+import 'package:desenrolai/modules/auth/models/login_response_model.dart';
 import 'package:desenrolai/modules/auth/models/user_model.dart';
+import 'package:desenrolai/shared/models/service_response.dart';
 
 class AuthService {
   final Dio _dio;
@@ -18,35 +20,67 @@ class AuthService {
 
   AuthService(this._storage, this._dio);
 
-  Future<User?> login(String email, String password) async {
+  Future<ServiceResponse<User?>> login(String email, String password) async {
     try {
-      final mockToken =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20ifQ.kG6vYXOdNFzHJFNUGY6qFOIQT9h_gKkLnqZrLTDQf8E';
+      final response = await _dio.post(
+        '/v1/auth/login',
+        data: {'email': email, 'password': password},
+      );
 
-      await _storage.write(_tokenStorageKey, mockToken);
+      final loginResponse = LoginResponse.fromJson(response.data);
 
-      final user = extractUserFromToken(mockToken);
+      await _storage.write(_tokenStorageKey, loginResponse.data.accessToken);
+      await _storage.write(
+        _refreshTokenStorageKey,
+        loginResponse.data.refreshToken,
+      );
+
+      final user = extractUserFromToken(loginResponse.data.accessToken);
       await _storage.write(_userStorageKey, jsonEncode(user.toJson()));
 
-      return user;
+      return ServiceResponse.success(user);
+    } on DioException catch (e) {
+      print('DioError type: ${e.type}, response: ${e.response}');
+      return ServiceResponse.failure("Usuário ou senha inválidos");
     } catch (e) {
-      print('Login failed: $e');
-      return null;
+      return ServiceResponse.failure("Usuário ou senha inválidos");
     }
   }
 
-  Future<User?> register(
+  Future<ServiceResponse<User>> register(
     String name,
     String email,
     String password,
-    int phone,
+    String phone,
   ) async {
     try {
-      print("object: aaa");
-      return User(email: email, name: name);
+      final response = await _dio.post(
+        '/v1/users',
+        data: {
+          'name': name,
+          'email': email,
+          'password': password,
+          'phone_number': "+55$phone",
+          'role': "user",
+        },
+      );
+
+      print("Register response: ${response.data}");
+
+      // final token = response.data['token'];
+      // await _storage.write(_tokenStorageKey, token);
+
+      // final user = extractUserFromToken(token);
+      // await _storage.write(_userStorageKey, jsonEncode(user.toJson()));
+
+      return ServiceResponse.failure("Erro ao fazer registro");
+    } on DioException catch (e) {
+      print('Register failed: ${e.message}');
+      print('DioError type: ${e.type}, response: ${e.response}');
+      return ServiceResponse.failure("Erro ao fazer registro");
     } catch (e) {
       print('Register failed: $e');
-      return null;
+      return ServiceResponse.failure("Erro ao fazer registro");
     }
   }
 
@@ -84,9 +118,16 @@ class AuthService {
   User extractUserFromToken(String token) {
     final decodedToken = JwtDecoder.decode(token);
 
+    if (decodedToken['user_id'] == null ||
+        // decodedToken['name'] == null ||
+        decodedToken['email'] == null) {
+      throw Exception('Token inválido');
+    }
+
     return User(
+      id: decodedToken['user_id']!,
       name: decodedToken['name'] ?? 'Sem nome',
-      email: decodedToken['email'] ?? 'sem@email.com',
+      email: decodedToken['email']!,
     );
   }
 }

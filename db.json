@@ -1,0 +1,66 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Maria Silva",
+      "email": "maria.silva@email.com",
+      "phone_number": "+55 11 91234-5678",
+      "role": "user",
+      "is_active": true,
+      "created_at": "2024-05-01T10:00:00Z",
+      "updated_at": "2024-05-10T14:30:00Z",
+      "last_login": "2024-05-22T08:00:00Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx1",
+      "user_id": "1",
+      "title": "Supermercado",
+      "amount": 25000,
+      "category_id": "food",
+      "type": "expense",
+      "source": "app",
+      "date": "2024-05-10",
+      "created_at": "2024-05-10T12:00:00Z",
+      "updated_at": "2024-05-10T12:00:00Z"
+    },
+    {
+      "id": "tx2",
+      "user_id": "1",
+      "title": "Salário",
+      "amount": 500000,
+      "category_id": "financial",
+      "type": "income",
+      "source": "whatsapp",
+      "date": "2024-05-05",
+      "created_at": "2024-05-05T09:00:00Z",
+      "updated_at": "2024-05-05T09:00:00Z"
+    }
+  ],
+  "schedules": [
+    {
+      "id": "ag1",
+      "user_id": "1",
+      "title": "Consulta médica",
+      "description": "Consulta com o Dr. João",
+      "location": "Clínica Saúde",
+      "starts_at": "2024-06-01T14:00:00Z",
+      "ends_at": "2024-06-01T15:00:00Z",
+      "reminder_at": "2024-06-01T13:00:00Z",
+      "notification_sent": false,
+      "created_at": "2024-05-20T10:00:00Z",
+      "updated_at": "2024-05-20T10:00:00Z"
+    }
+  ],
+  "spending-limits": [
+    {
+      "id": "lim1",
+      "user_id": "1",
+      "category_id": "food",
+      "limit_value": 100000,
+      "created_at": "2024-05-01T00:00:00Z",
+      "updated_at": "2024-05-15T12:00:00Z"
+    }
+  ]
+}

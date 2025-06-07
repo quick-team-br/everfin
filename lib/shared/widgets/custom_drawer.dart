@@ -29,7 +29,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    "Everfin",
+                    "Desenrola AI",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

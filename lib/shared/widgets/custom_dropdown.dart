@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CustomDropdown extends StatefulWidget {
+class CustomDropdown<T> extends StatefulWidget {
   const CustomDropdown({
     super.key,
     required this.items,
@@ -11,19 +11,21 @@ class CustomDropdown extends StatefulWidget {
     this.defaultValue,
     this.onChanged,
     this.selectedItem,
+    this.itemToString,
   });
-  final List<String> items;
-  final String? defaultValue;
-  final String? selectedItem;
+  final List<T> items;
+  final T? defaultValue;
+  final T? selectedItem;
   final String label;
-  final Function(String?)? onChanged;
+  final Function(T?)? onChanged;
+  final String Function(T)? itemToString;
 
   @override
-  State<CustomDropdown> createState() => _CustomDropdownState();
+  State<CustomDropdown<T>> createState() => _CustomDropdownState<T>();
 }
 
-class _CustomDropdownState extends State<CustomDropdown> {
-  String? _selectedItem;
+class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
+  T? _selectedItem;
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 
   @override
-  void didUpdateWidget(CustomDropdown oldWidget) {
+  void didUpdateWidget(CustomDropdown<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedItem != oldWidget.selectedItem) {
       _selectedItem = widget.selectedItem;
@@ -47,43 +49,27 @@ class _CustomDropdownState extends State<CustomDropdown> {
         Text(widget.label, style: Theme.of(context).textTheme.labelMedium),
         const SizedBox(height: 12),
         DropdownButtonHideUnderline(
-          child: DropdownButton2<String>(
+          child: DropdownButton2<T>(
             isExpanded: true,
             value:
                 widget.items.isNotEmpty
                     ? widget.selectedItem ?? _selectedItem
                     : null,
             items:
-                widget.items.isEmpty
-                    ? [""]
-                        .map(
-                          (item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                        )
-                        .toList()
-                    : widget.items
-                        .map(
-                          (item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                        )
-                        .toList(),
+                widget.items.map((item) {
+                  return DropdownMenuItem<T>(
+                    value: item,
+                    child: Text(
+                      widget.itemToString?.call(item) ?? "",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  );
+                }).toList(),
             onChanged: (value) {
               setState(() {
                 _selectedItem = value;
               });
-              if (widget.onChanged != null) {
-                widget.onChanged!(value);
-              }
+              widget.onChanged?.call(value);
             },
             buttonStyleData: ButtonStyleData(
               padding: const EdgeInsets.only(right: 16, top: 4, bottom: 4),

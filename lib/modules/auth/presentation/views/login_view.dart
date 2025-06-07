@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'DesenrolAI',
+                    'Desenrola AI',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class LoginView extends StatelessWidget {
                         context: context,
                         isScrollControlled: true,
                         builder: (_) {
-                          return LoginBottomSheet();
+                          return const LoginBottomSheet();
                         },
                       );
                     },
@@ -101,7 +101,7 @@ class LoginView extends StatelessWidget {
                           context: context,
                           isScrollControlled: true,
                           builder: (_) {
-                            return RegisterBottomSheet();
+                            return const RegisterBottomSheet();
                           },
                         );
                       },

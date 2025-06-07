@@ -38,9 +38,9 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      description: json['description'],
+      description: json['title'],
       categoryId: json['category_id'],
-      categoryName: json['category_name'],
+      categoryName: json['category_id'],
       type: TransactionType.values.firstWhere(
         (e) => e.toString() == 'TransactionType.${json['type']}',
       ),

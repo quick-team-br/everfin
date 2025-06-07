@@ -27,12 +27,20 @@ class LoginModalViewModel extends StateNotifier<LoginModalState> {
     return null;
   }
 
-  Future<bool> submit() async {
+  Future<String?> submit() async {
     state = state.copyWith(isLoading: true, error: null);
 
-    await ref.read(authControllerProvider.notifier).login(_email, _password);
-    state = state.copyWith(isLoading: false, error: null);
-    return false;
+    final response = await ref
+        .read(authControllerProvider.notifier)
+        .login(_email, _password);
+
+    if (response.success) {
+      state = state.copyWith(isLoading: false, error: null);
+      return null;
+    }
+
+    state = state.copyWith(isLoading: false, error: response.error);
+    return response.error;
   }
 }
 

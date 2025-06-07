@@ -1,12 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:desenrolai/modules/finances/models/transaction_category.dart';
 import 'package:desenrolai/modules/finances/models/transaction_edit_state.dart';
 import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 import 'package:desenrolai/modules/finances/services/transaction_service.dart';
 
 class TransactionEditSheetViewModel
     extends StateNotifier<TransactionEditSheetState> {
-  TransactionEditSheetViewModel() : super(TransactionEditSheetState()) {
+  final TransactionService transactionService;
+
+  TransactionEditSheetViewModel(this.transactionService)
+    : super(TransactionEditSheetState()) {
     loadCategories();
   }
   Transaction? originalTransaction;
@@ -25,15 +29,11 @@ class TransactionEditSheetViewModel
     );
   }
 
-  void setCategory(String? newCategory) {
-    final currentCategoryId =
-        state.availableCategories
-            .firstWhere((category) => category.description == newCategory)
-            .id;
+  void setCategory(TransactionCategory? newCategory) {
     state = state.copyWith(
       currentTransaction: state.currentTransaction?.copyWith(
-        categoryId: currentCategoryId,
-        categoryName: newCategory,
+        categoryId: newCategory?.id,
+        categoryName: newCategory?.description,
       ),
     );
   }
@@ -45,7 +45,7 @@ class TransactionEditSheetViewModel
   }
 
   Future<void> loadCategories() async {
-    final categories = await TransactionService().fetchCategories();
+    final categories = await transactionService.fetchCategories();
 
     state = state.copyWith(
       formState: TransactionEditFormState.idle,
@@ -58,37 +58,28 @@ class TransactionEditSheetViewModel
 
     state = state.copyWith(formState: TransactionEditFormState.saving);
 
-    try {
-      final transactionId = await TransactionService().editTransaction(
-        state.currentTransaction!,
-      );
+    final serviceResponse = await transactionService.editTransaction(
+      state.currentTransaction!,
+    );
 
-      if (transactionId != null) {
-        return state.currentTransaction;
-      }
-    } catch (e, st) {
-      print('Error: $e');
-      print('StackTrace: $st');
+    if (serviceResponse.success) {
+      return state.currentTransaction;
     }
+
     return null;
   }
 
   Future<Transaction?> deleteTransaction() async {
     if (state.currentTransaction == null) return null;
 
-    // state = state.copyWith(formState: TransactionEditFormState.saving);
+    state = state.copyWith(formState: TransactionEditFormState.saving);
 
-    try {
-      final transactionId = await TransactionService().deleteTransaction(
-        state.currentTransaction!.id,
-      );
+    final serviceResponse = await transactionService.deleteTransaction(
+      state.currentTransaction!.id,
+    );
 
-      if (transactionId != null) {
-        return state.currentTransaction;
-      }
-    } catch (e, st) {
-      print('Error: $e');
-      print('StackTrace: $st');
+    if (serviceResponse.success) {
+      return state.currentTransaction;
     }
     return null;
   }
@@ -121,4 +112,7 @@ final transactionDetailSheetViewModelProvider =
     StateNotifierProvider.autoDispose<
       TransactionEditSheetViewModel,
       TransactionEditSheetState
-    >((ref) => TransactionEditSheetViewModel());
+    >(
+      (ref) =>
+          TransactionEditSheetViewModel(ref.read(transactionServiceProvider)),
+    );

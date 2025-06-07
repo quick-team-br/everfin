@@ -24,6 +24,7 @@ dependencies:
   dio: ^5.8.0+1
   flutter_native_splash: ^2.4.6
   flutter_launcher_icons: ^0.14.3
+  toastification: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -45,3 +46,5 @@ flutter:
     - assets/svgs/logo_icon.svg
     - assets/svgs/moon_icon.svg
     - assets/svgs/sun_icon.svg
+    - assets/svgs/empty_list_movs_dark.svg
+    - assets/svgs/empty_list_movs_light.svg

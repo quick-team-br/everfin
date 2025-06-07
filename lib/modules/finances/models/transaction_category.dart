@@ -20,9 +20,10 @@ class TransactionCategory {
   factory TransactionCategory.fromJson(Map<String, dynamic> json) {
     return TransactionCategory(
       id: json['id'],
-      type: TransactionType.values.firstWhere(
-        (e) => e.toString() == 'TransactionType.${json['type']}',
-      ),
+      // type: TransactionType.values.firstWhere(
+      //   (e) => e.toString() == 'TransactionType.${json['type']}',
+      // ),
+      type: TransactionType.expense,
       description: json['name'],
     );
   }

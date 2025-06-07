@@ -21,8 +21,9 @@ class ButtonStyles {
     return OutlinedButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      // side: const BorderSide(color: AppColors.darkBorder),
       foregroundColor: primaryText,
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: VisualDensity.standard,
     );
   }
 }

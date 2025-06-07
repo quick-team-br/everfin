@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:toastification/toastification.dart';
 
 import 'package:desenrolai/core/theme/app_gradients.dart';
 import 'package:desenrolai/modules/auth/presentation/view_models/login_modal_viewmodel.dart';
@@ -91,16 +92,22 @@ class _LoginBottomSheetState extends ConsumerState<LoginBottomSheet> {
                                 : null,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            final success = await notifier.submit();
-                            if (success) {
+                            final error = await notifier.submit();
+                            if (!mounted) return;
+                            if (error == null) {
                               Navigator.pop(context);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    viewModel.error ?? 'Erro desconhecido',
-                                  ),
-                                ),
+                              toastification.show(
+                                context: context,
+                                type: ToastificationType.error,
+                                style: ToastificationStyle.fillColored,
+                                title: Text("Falha no login"),
+                                description: Text(error),
+                                alignment: Alignment.topCenter,
+                                autoCloseDuration: const Duration(seconds: 5),
+                                borderRadius: BorderRadius.circular(12.0),
+                                dragToClose: true,
+                                showIcon: false,
                               );
                             }
                           }

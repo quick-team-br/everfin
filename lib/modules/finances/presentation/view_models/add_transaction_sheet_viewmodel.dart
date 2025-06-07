@@ -11,7 +11,10 @@ import '../../models/transaction_model.dart';
 
 class AddTransactionSheetViewModel
     extends StateNotifier<AddTransactionSheetState> {
-  AddTransactionSheetViewModel() : super(AddTransactionSheetState()) {
+  final TransactionService transactionService;
+
+  AddTransactionSheetViewModel(this.transactionService)
+    : super(AddTransactionSheetState()) {
     loadCategories();
   }
   int amount = 0;
@@ -30,7 +33,7 @@ class AddTransactionSheetViewModel
     state = state.copyWith(selectedType: newSelectedType, category: null);
   }
 
-  void setCategory(String? newCategory) {
+  void setCategory(TransactionCategory? newCategory) {
     state = state.copyWith(category: newCategory);
     validateTransaction();
   }
@@ -53,34 +56,27 @@ class AddTransactionSheetViewModel
 
   Future<Transaction?> addNewTransaction() async {
     state = state.copyWith(isLoading: true);
-    try {
-      final currentCategoryId =
-          state.availableCategories
-              .firstWhere((category) => category.description == state.category)
-              .id;
-      final transactionId = await TransactionService().addTransaction(
-        description,
-        amount,
-        currentCategoryId,
-        state.selectedType,
-      );
 
-      if (transactionId != null) {
-        return Transaction(
-          id: transactionId,
-          description: description,
-          categoryId: currentCategoryId,
-          categoryName: state.category!,
-          type: state.selectedType,
-          amount: amount,
-        );
-      }
-    } catch (e, st) {
-      print('Error: $e');
-      print('StackTrace: $st');
-    } finally {
-      state = state.copyWith(isLoading: false);
+    final serviceResponse = await transactionService.addTransaction(
+      description,
+      amount,
+      state.category!.id,
+      state.selectedType,
+    );
+
+    state = state.copyWith(isLoading: false);
+
+    if (serviceResponse.success) {
+      return Transaction(
+        id: serviceResponse.data!,
+        description: description,
+        categoryId: state.category!.id,
+        categoryName: state.category!.description,
+        type: state.selectedType,
+        amount: amount,
+      );
     }
+
     return null;
   }
 
@@ -96,7 +92,7 @@ class AddTransactionSheetViewModel
   Future<void> loadCategories() async {
     state = state.copyWith(isLoading: true);
 
-    final categories = await TransactionService().fetchCategories();
+    final categories = await transactionService.fetchCategories();
 
     state = state.copyWith(isLoading: false, availableCategories: categories);
   }
@@ -110,4 +106,4 @@ class AddTransactionSheetViewModel
 final addTransactionSheetViewModelProvider = StateNotifierProvider.autoDispose<
   AddTransactionSheetViewModel,
   AddTransactionSheetState
->((ref) => AddTransactionSheetViewModel());
+>((ref) => AddTransactionSheetViewModel(ref.read(transactionServiceProvider)));

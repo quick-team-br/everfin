@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:desenrolai/modules/auth/controller/auth_controller.dart';
 import 'package:desenrolai/modules/finances/models/home_state.dart';
 import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 import 'package:desenrolai/modules/finances/models/transactions_balance.dart';
@@ -10,13 +11,14 @@ import 'month_selector_viewmodel.dart';
 
 final homeProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
-      (ref) => HomeViewModel(ref),
+      (ref) => HomeViewModel(ref, ref.read(transactionServiceProvider)),
     );
 
 class HomeViewModel extends StateNotifier<HomeState> {
   final Ref ref;
+  final TransactionService transactionService;
 
-  HomeViewModel(this.ref) : super(HomeState()) {
+  HomeViewModel(this.ref, this.transactionService) : super(HomeState()) {
     final selectedMonth = ref.read(monthSelectorProvider) + 1;
     loadHomeTransactionsData(selectedMonth);
   }
@@ -30,14 +32,19 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Future<void> loadHomeTransactionsData(int monthIndex) async {
     state = state.copyWith(isLoading: true);
 
-    balance = await TransactionService().getBalance(monthIndex);
+    balance = await transactionService.getBalance(monthIndex);
 
-    final transactions = await TransactionService().fetchTransactionsForMonth(
+    final serviceResponse = await transactionService.fetchTransactionsByMonth(
       monthIndex,
       4,
+      ref.watch(authControllerProvider).user!.id,
     );
 
-    state = state.copyWith(isLoading: false, lastTransactions: transactions);
+    state = state.copyWith(
+      isLoading: false,
+      lastTransactions: serviceResponse.data,
+      error: serviceResponse.error,
+    );
   }
 
   void updateLastTransactions(Transaction newTransaction) {
@@ -63,6 +70,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
       );
     }
 
-    state = state.copyWith(lastTransactions: currentTransactions);
+    state = state.copyWith(lastTransactions: currentTransactions, error: null);
   }
 }

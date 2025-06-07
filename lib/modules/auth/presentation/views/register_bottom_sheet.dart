@@ -32,6 +32,7 @@ class _RegisterBottomSheetState extends ConsumerState<RegisterBottomSheet> {
       ),
       child: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

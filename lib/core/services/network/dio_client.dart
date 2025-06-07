@@ -6,7 +6,7 @@ import 'auth_interceptor.dart';
 final dioClientProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'https://suaapi.com/api/v1',
+      baseUrl: 'http://localhost:8080/api',
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
     ),

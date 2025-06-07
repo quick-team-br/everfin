@@ -3,7 +3,7 @@ import 'package:desenrolai/modules/finances/models/transaction_model.dart';
 
 class AddTransactionSheetState {
   final TransactionType selectedType;
-  final String? category;
+  final TransactionCategory? category;
   final bool isLoading;
   final List<TransactionCategory> availableCategories;
   final bool isValid;
@@ -27,7 +27,8 @@ class AddTransactionSheetState {
   }) {
     return AddTransactionSheetState(
       selectedType: selectedType ?? this.selectedType,
-      category: category == _unset ? this.category : category as String?,
+      category:
+          category == _unset ? this.category : category as TransactionCategory?,
       isLoading: isLoading ?? this.isLoading,
       availableCategories: availableCategories ?? this.availableCategories,
       isValid: isValid ?? this.isValid,
